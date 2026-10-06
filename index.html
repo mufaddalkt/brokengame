@@ -58,14 +58,25 @@
     let ballY = 50;
     let ballVelocityY = 2;
     let sliderX = 0;
-    let sliderSpeed = 3;
+    let moveLeft = false;
+    let moveRight = false;
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") moveLeft = true;
+      if (event.key === "ArrowRight") moveRight = true;
+    });
+
+    document.addEventListener("keyup", (event) => {
+      if (event.key === "ArrowLeft") moveLeft = false;
+      if (event.key === "ArrowRight") moveRight = false;
+    });
 
     function updateGame() {
-      sliderX += sliderSpeed;
+      if (moveLeft) sliderX -= 5;
+      if (moveRight) sliderX += 5;
 
-      if (sliderX <= 0 || sliderX >= 500) {
-        sliderSpeed *= -1;
-      }
+      if (sliderX < 0) sliderX = 0;
+      if (sliderX > 500) sliderX = 500;
 
       slider.style.left = sliderX + "px";
 
