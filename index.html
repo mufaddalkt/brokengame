@@ -56,7 +56,8 @@
 
     let ballX = 50;
     let ballY = 50;
-    let ballVelocityY = 2;
+    let ballVelocityX = 3;
+    let ballVelocityY = 3;
     let sliderX = 0;
     let moveLeft = false;
     let moveRight = false;
@@ -80,8 +81,17 @@
 
       slider.style.left = sliderX + "px";
 
-      ballVelocityY += 0.15;
+      ballX += ballVelocityX;
       ballY += ballVelocityY;
+
+      if (ballX <= 0 || ballX >= 570) {
+        ballVelocityX *= -1;
+      }
+
+      if (ballY <= 0) {
+        ballY = 0;
+        ballVelocityY *= -1;
+      }
 
       const sliderTop = 365;
       const ballBottom = ballY + 30;
@@ -94,14 +104,17 @@
         ballX <= sliderX + 100
       ) {
         ballY = sliderTop - 30;
-        ballVelocityY = -7;
+        ballVelocityY *= -1;
       }
 
       if (ballY > 400) {
+        ballX = 285;
         ballY = 50;
-        ballVelocityY = 2;
+        ballVelocityX = 3;
+        ballVelocityY = 3;
       }
 
+      ball.style.left = ballX + "px";
       ball.style.top = ballY + "px";
       requestAnimationFrame(updateGame);
     }
