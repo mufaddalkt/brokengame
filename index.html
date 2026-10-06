@@ -40,8 +40,15 @@
     <div id="ball"></div>
   </div>
 
+  <input type="range" id="slider" min="0" max="570" value="50">
+
   <script>
     const ball = document.getElementById("ball");
+    const slider = document.getElementById("slider");
+
+    slider.addEventListener("input", () => {
+      ball.style.left = slider.value + "px";
+    });
 
     // Intentionally simple and incomplete.
     // Students can gradually improve this game.
