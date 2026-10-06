@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broken Ball Game</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: white;
+      text-align: center;
+    }
+
+    #game {
+      width: 600px;
+      height: 400px;
+      margin: 40px auto;
+      border: 2px solid black;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #ball {
+      width: 30px;
+      height: 30px;
+      background: blue;
+      border-radius: 50%;
+      position: absolute;
+      left: 50px;
+      top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Broken Ball Game</h1>
+  <p>There is a ball. That's basically it.</p>
+
+  <div id="game">
+    <div id="ball"></div>
+  </div>
+
+  <script>
+    const ball = document.getElementById("ball");
+
+    // Intentionally simple and incomplete.
+    // Students can gradually improve this game.
+  </script>
+</body>
+</html>
