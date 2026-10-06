@@ -30,6 +30,15 @@
       left: 50px;
       top: 50px;
     }
+
+    #slider {
+      width: 100px;
+      height: 15px;
+      background: black;
+      position: absolute;
+      left: 0;
+      bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -38,17 +47,55 @@
 
   <div id="game">
     <div id="ball"></div>
+    <div id="slider"></div>
   </div>
-
-  <input type="range" id="slider" min="0" max="570" value="50">
 
   <script>
     const ball = document.getElementById("ball");
     const slider = document.getElementById("slider");
 
-    slider.addEventListener("input", () => {
-      ball.style.left = slider.value + "px";
-    });
+    let ballX = 50;
+    let ballY = 50;
+    let ballVelocityY = 2;
+    let sliderX = 0;
+    let sliderSpeed = 3;
+
+    function updateGame() {
+      sliderX += sliderSpeed;
+
+      if (sliderX <= 0 || sliderX >= 500) {
+        sliderSpeed *= -1;
+      }
+
+      slider.style.left = sliderX + "px";
+
+      ballVelocityY += 0.15;
+      ballY += ballVelocityY;
+
+      const sliderTop = 365;
+      const ballBottom = ballY + 30;
+
+      if (
+        ballVelocityY > 0 &&
+        ballBottom >= sliderTop &&
+        ballBottom <= sliderTop + 15 &&
+        ballX + 30 >= sliderX &&
+        ballX <= sliderX + 100
+      ) {
+        ballY = sliderTop - 30;
+        ballVelocityY = -7;
+      }
+
+      if (ballY > 400) {
+        ballY = 50;
+        ballVelocityY = 2;
+      }
+
+      ball.style.top = ballY + "px";
+      requestAnimationFrame(updateGame);
+    }
+
+    updateGame();
 
     // Intentionally simple and incomplete.
     // Students can gradually improve this game.
