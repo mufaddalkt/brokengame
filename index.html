@@ -48,9 +48,26 @@
       inset: 0;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+      gap: 18px;
       color: red;
       font-size: 42px;
       font-weight: bold;
+    }
+
+    #restart-button {
+      padding: 10px 22px;
+      border: 2px solid black;
+      border-radius: 8px;
+      background: white;
+      color: black;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #restart-button:hover {
+      background: #f0f0f0;
     }
 
     #slider {
@@ -74,7 +91,10 @@
       <div>Score: <span id="score">0</span></div>
       <div>Level: <span id="level">1</span></div>
     </div>
-    <div id="game-over">Game Over</div>
+    <div id="game-over">
+      <span>Game Over</span>
+      <button id="restart-button" type="button">Restart</button>
+    </div>
   </div>
 
   <script>
@@ -83,6 +103,7 @@
     const gameOverMessage = document.getElementById("game-over");
     const scoreDisplay = document.getElementById("score");
     const levelDisplay = document.getElementById("level");
+    const restartButton = document.getElementById("restart-button");
 
     let ballX = 50;
     let ballY = 50;
@@ -103,6 +124,27 @@
     document.addEventListener("keyup", (event) => {
       if (event.key === "ArrowLeft") moveLeft = false;
       if (event.key === "ArrowRight") moveRight = false;
+    });
+
+    restartButton.addEventListener("click", () => {
+      ballX = 285;
+      ballY = 50;
+      ballVelocityX = 3;
+      ballVelocityY = 3;
+      sliderX = 250;
+      moveLeft = false;
+      moveRight = false;
+      score = 0;
+      level = 1;
+
+      ball.style.left = ballX + "px";
+      ball.style.top = ballY + "px";
+      slider.style.left = sliderX + "px";
+      scoreDisplay.textContent = score;
+      levelDisplay.textContent = level;
+      gameOverMessage.style.display = "none";
+
+      requestAnimationFrame(updateGame);
     });
 
     function updateGame() {
