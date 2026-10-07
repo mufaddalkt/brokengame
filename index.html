@@ -32,6 +32,17 @@
       top: 50px;
     }
 
+    #game-over {
+      display: none;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      color: red;
+      font-size: 42px;
+      font-weight: bold;
+    }
+
     #slider {
       width: 100px;
       height: 15px;
@@ -49,11 +60,13 @@
   <div id="game">
     <div id="ball"></div>
     <div id="slider"></div>
+    <div id="game-over">Game Over</div>
   </div>
 
   <script>
     const ball = document.getElementById("ball");
     const slider = document.getElementById("slider");
+    const gameOverMessage = document.getElementById("game-over");
 
     let ballX = 50;
     let ballY = 50;
@@ -109,10 +122,8 @@
       }
 
       if (ballY > 400) {
-        ballX = 285;
-        ballY = 50;
-        ballVelocityX = 3;
-        ballVelocityY = 3;
+        gameOverMessage.style.display = "flex";
+        return;
       }
 
       ball.style.left = ballX + "px";
