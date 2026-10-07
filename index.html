@@ -22,6 +22,55 @@
       overflow: hidden;
     }
 
+    .cloud {
+      width: 90px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 30px;
+      position: absolute;
+      left: -120px;
+      pointer-events: none;
+      animation: drift 14s linear infinite;
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: "";
+      position: absolute;
+      background: inherit;
+      border-radius: 50%;
+    }
+
+    .cloud::before {
+      width: 42px;
+      height: 42px;
+      left: 14px;
+      top: -20px;
+    }
+
+    .cloud::after {
+      width: 52px;
+      height: 52px;
+      right: 10px;
+      top: -28px;
+    }
+
+    .cloud-one {
+      top: 70px;
+    }
+
+    .cloud-two {
+      top: 160px;
+      transform: scale(0.75);
+      animation-delay: -7s;
+      animation-duration: 18s;
+    }
+
+    @keyframes drift {
+      from { left: -120px; }
+      to { left: 630px; }
+    }
+
     #ball {
       width: 30px;
       height: 30px;
@@ -85,6 +134,8 @@
   <p>There is a ball. That's basically it.</p>
 
   <div id="game">
+    <div class="cloud cloud-one"></div>
+    <div class="cloud cloud-two"></div>
     <div id="ball"></div>
     <div id="slider"></div>
     <div id="stats">
