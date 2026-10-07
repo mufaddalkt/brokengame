@@ -98,6 +98,7 @@
   </div>
 
   <script>
+    const game = document.getElementById("game");
     const ball = document.getElementById("ball");
     const slider = document.getElementById("slider");
     const gameOverMessage = document.getElementById("game-over");
@@ -116,6 +117,7 @@
     let level = 1;
     const maxBallSpeed = 12;
     const ballColors = ["red", "orange", "purple", "green", "deeppink", "blue"];
+    const levelBackgrounds = ["skyblue", "lightyellow", "lightgreen", "lavender", "lightpink", "peachpuff"];
     let ballColorIndex = 0;
     let audioContext;
 
@@ -171,6 +173,7 @@
       level = 1;
       ballColorIndex = 0;
 
+      game.style.background = levelBackgrounds[0];
       ball.style.background = ballColors[ballColorIndex];
       ball.style.left = ballX + "px";
       ball.style.top = ballY + "px";
@@ -229,6 +232,7 @@
         if (score % 5 === 0) {
           level += 1;
           levelDisplay.textContent = level;
+          game.style.background = levelBackgrounds[(level - 1) % levelBackgrounds.length];
           ballVelocityX *= 1.07;
           ballVelocityY *= 1.07;
         }
