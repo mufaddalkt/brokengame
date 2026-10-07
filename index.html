@@ -32,6 +32,16 @@
       top: 50px;
     }
 
+    #stats {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      z-index: 2;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: right;
+    }
+
     #game-over {
       display: none;
       position: absolute;
@@ -60,6 +70,10 @@
   <div id="game">
     <div id="ball"></div>
     <div id="slider"></div>
+    <div id="stats">
+      <div>Score: <span id="score">0</span></div>
+      <div>Level: <span id="level">1</span></div>
+    </div>
     <div id="game-over">Game Over</div>
   </div>
 
@@ -67,6 +81,8 @@
     const ball = document.getElementById("ball");
     const slider = document.getElementById("slider");
     const gameOverMessage = document.getElementById("game-over");
+    const scoreDisplay = document.getElementById("score");
+    const levelDisplay = document.getElementById("level");
 
     let ballX = 50;
     let ballY = 50;
@@ -75,6 +91,9 @@
     let sliderX = 0;
     let moveLeft = false;
     let moveRight = false;
+    let score = 0;
+    let level = 1;
+    const maxBallSpeed = 12;
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "ArrowLeft") moveLeft = true;
@@ -119,6 +138,22 @@
       ) {
         ballY = sliderTop - 30;
         ballVelocityY *= -1;
+
+        score += 1;
+        scoreDisplay.textContent = score;
+
+        ballVelocityX *= 1.03;
+        ballVelocityY *= 1.03;
+
+        if (score % 5 === 0) {
+          level += 1;
+          levelDisplay.textContent = level;
+          ballVelocityX *= 1.07;
+          ballVelocityY *= 1.07;
+        }
+
+        ballVelocityX = Math.sign(ballVelocityX) * Math.min(Math.abs(ballVelocityX), maxBallSpeed);
+        ballVelocityY = Math.sign(ballVelocityY) * Math.min(Math.abs(ballVelocityY), maxBallSpeed);
       }
 
       if (ballY > 400) {
