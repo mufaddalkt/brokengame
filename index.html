@@ -115,8 +115,38 @@
     let score = 0;
     let level = 1;
     const maxBallSpeed = 12;
+    let audioContext;
+
+    function unlockAudio() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      if (audioContext.state === "suspended") {
+        audioContext.resume();
+      }
+    }
+
+    function playBounceSound() {
+      unlockAudio();
+
+      const oscillator = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+      const now = audioContext.currentTime;
+
+      oscillator.type = "sine";
+      oscillator.frequency.setValueAtTime(650, now);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+      oscillator.connect(gain);
+      gain.connect(audioContext.destination);
+      oscillator.start(now);
+      oscillator.stop(now + 0.08);
+    }
 
     document.addEventListener("keydown", (event) => {
+      unlockAudio();
       if (event.key === "ArrowLeft") moveLeft = true;
       if (event.key === "ArrowRight") moveRight = true;
     });
@@ -127,6 +157,7 @@
     });
 
     restartButton.addEventListener("click", () => {
+      unlockAudio();
       ballX = 285;
       ballY = 50;
       ballVelocityX = 3;
@@ -180,6 +211,7 @@
       ) {
         ballY = sliderTop - 30;
         ballVelocityY *= -1;
+        playBounceSound();
 
         score += 1;
         scoreDisplay.textContent = score;
